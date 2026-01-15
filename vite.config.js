@@ -19,13 +19,22 @@ export default defineConfig({
     },
   },
   ssr: {
-    noExternal: true,
+    noExternal: /^(react|react-dom|react\/jsx-runtime|react\/jsx-dev-runtime|@remix-run|@shopify)/,
     resolve: {
       conditions: ['worker', 'browser'],
+      dedupe: ['react', 'react-dom'],
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom', 'react/jsx-runtime'],
     },
   },
-  optimizeDeps: {
-    include: ['react', 'react-dom', 'react/jsx-runtime'],
+  server: {
+    hmr: {
+      overlay: false,
+    },
+  },
+  define: {
+    global: 'globalThis',
   },
 });
 

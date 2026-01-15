@@ -1,6 +1,6 @@
+import React from 'react';
 import {RemixServer} from '@remix-run/react';
 import {renderToString} from 'react-dom/server';
-import {createContentSecurityPolicy} from '@shopify/hydrogen';
 
 export default async function handleRequest(
   request,
@@ -8,33 +8,17 @@ export default async function handleRequest(
   responseHeaders,
   remixContext,
 ) {
-  const {nonce, header, NonceProvider} = createContentSecurityPolicy({
-    // Allow inline scripts in development for Vite HMR
-    scriptSrc: process.env.NODE_ENV === 'development' 
-      ? [
-          "'self'",
-          'https://cdn.shopify.com',
-          'http://localhost:*',
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-        ]
-      : undefined,
-    styleSrc: [
-      "'self'",
-      'https://cdn.shopify.com',
-      "'unsafe-inline'",
-    ],
-  });
+  // Set CSP header for development (allows Vite HMR)
+  if (process.env.NODE_ENV === 'development') {
+    responseHeaders.set(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://localhost:* https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://cdn.shopify.com; img-src 'self' data: https:; font-src 'self' data:;"
+    );
+  }
 
   const html = renderToString(
-    <NonceProvider>
-      <RemixServer context={remixContext} url={request.url} nonce={nonce} />
-    </NonceProvider>,
+    <RemixServer context={remixContext} url={request.url} />
   );
-
-  if (header) {
-    responseHeaders.set('Content-Security-Policy', header);
-  }
 
   responseHeaders.set('Content-Type', 'text/html');
 

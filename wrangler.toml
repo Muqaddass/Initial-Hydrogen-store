@@ -1,0 +1,7 @@
+# Shopify Oxygen (Cloudflare Workers) configuration
+name = "hydrogen-outfit-builder"
+compatibility_date = "2024-01-01"
+
+[env.production]
+vars = { NODE_ENV = "production" }
+

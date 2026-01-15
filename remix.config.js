@@ -4,7 +4,7 @@ export default {
   ignoredRouteFiles: ['**/.*'],
   watchPaths: ['./public'],
   server: './server.js',
-  serverBuildPath: 'dist/worker/index.js',
+  serverBuildPath: 'build/server/index.js',
   serverConditions: ['worker'],
   serverDependenciesToBundle: 'all',
   serverMainFields: ['browser', 'module', 'main'],

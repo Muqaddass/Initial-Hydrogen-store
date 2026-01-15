@@ -6,18 +6,26 @@ export default defineConfig({
   plugins: [
     remix({
       ignoredRouteFiles: ['**/.*'],
+      serverBuildFile: 'index.js',
     }),
     hydrogen(),
   ],
   build: {
     target: 'esnext',
-    ssr: true,
+    rollupOptions: {
+      output: {
+        format: 'es',
+      },
+    },
   },
   ssr: {
-    noExternal: /^(react|react-dom|react\/jsx-runtime|@remix-run|@shopify)/,
-    optimizeDeps: {
-      include: ['react', 'react-dom', 'react/jsx-runtime'],
+    noExternal: true,
+    resolve: {
+      conditions: ['worker', 'browser'],
     },
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react/jsx-runtime'],
   },
 });
 

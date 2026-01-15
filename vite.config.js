@@ -11,10 +11,12 @@ export default defineConfig({
   ],
   build: {
     target: 'esnext',
+    ssr: true,
   },
   ssr: {
+    noExternal: /^(react|react-dom|react\/jsx-runtime|@remix-run|@shopify)/,
     optimizeDeps: {
-      include: [],
+      include: ['react', 'react-dom', 'react/jsx-runtime'],
     },
   },
 });

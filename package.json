@@ -1,0 +1,39 @@
+{
+  "name": "hydrogen-outfit-builder",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "remix vite:dev --port 3000",
+    "build": "remix vite:build",
+    "preview": "npm run build && remix-serve ./build/server/index.js",
+    "lint": "eslint --no-error-on-unmatched-pattern --ext .js,.jsx ."
+  },
+  "dependencies": {
+    "@remix-run/react": "^2.8.1",
+    "@remix-run/server-runtime": "^2.8.1",
+    "@shopify/hydrogen": "^2024.1.0",
+    "@shopify/remix-oxygen": "^2.0.3",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
+    "isbot": "^5.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@remix-run/dev": "^2.8.1",
+    "@remix-run/eslint-config": "^2.8.1",
+    "@shopify/cli": "^3.56.0",
+    "@shopify/hydrogen-codegen": "^0.3.0",
+    "@shopify/oxygen-workers-types": "^4.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.42.0",
+    "prettier": "^3.2.5",
+    "vite": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

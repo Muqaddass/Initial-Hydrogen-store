@@ -6,31 +6,48 @@ import {createShopifyClient, PRODUCTS_QUERY} from '../lib/shopify';
  * Loader function - fetches products from Shopify Storefront API
  * This runs on the server before the page renders
  */
-export async function loader() {
+export async function loader({context}) {
   try {
-    const {storefront} = createShopifyClient();
+    // Get environment variables from context (Oxygen) or process.env (local)
+    const env = context?.env || {};
+    const {storefront} = createShopifyClient(env);
+    
+    console.log('📦 Fetching products from Shopify...');
     
     // Fetch products from Shopify
-    const {data} = await storefront.query(PRODUCTS_QUERY, {
+    const response = await storefront.query(PRODUCTS_QUERY, {
       variables: {
         first: 12, // Fetch 12 products
       },
     });
 
-    const products = data?.products?.edges?.map((edge) => edge.node) || [];
+    const products = response?.data?.products?.edges?.map((edge) => edge.node) || [];
+    const productCount = products.length;
+
+    console.log(`✅ Fetched ${productCount} products from Shopify`);
+
+    if (productCount === 0) {
+      console.warn('⚠️ No products found. Make sure products are published to Storefront API sales channel.');
+    }
 
     return json({
       products,
-      hasProducts: products.length > 0,
+      hasProducts: productCount > 0,
     });
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('❌ Error fetching products:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      response: error.response,
+    });
     
-    // Return mock data if API fails (useful for development)
+    // Return detailed error information
     return json({
       products: [],
       hasProducts: false,
-      error: 'Failed to fetch products. Please check your Shopify API credentials.',
+      error: error.message || 'Failed to fetch products. Please check your Shopify API credentials.',
+      errorDetails: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 }

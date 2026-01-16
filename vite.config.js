@@ -24,19 +24,22 @@ export default defineConfig({
     },
   },
   ssr: {
-    // Bundle React and related dependencies for Oxygen/Workers
-    noExternal: [
-      /^react/,
-      /^react-dom/,
-      /^@remix-run/,
-      /^@shopify/,
-    ],
+    // Bundle ALL dependencies for Oxygen/Workers environment (Cloudflare Workers)
+    // This ensures react/jsx-runtime and all React modules are bundled
+    noExternal: true,
     resolve: {
       conditions: ['worker', 'browser'],
       dedupe: ['react', 'react-dom'],
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
+      include: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'react/jsx-dev-runtime',
+        '@remix-run/react',
+        '@remix-run/server-runtime',
+      ],
     },
   },
   server: {

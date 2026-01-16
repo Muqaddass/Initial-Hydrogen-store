@@ -7,6 +7,11 @@ export default defineConfig({
     remix({
       ignoredRouteFiles: ['**/.*'],
       serverBuildFile: 'index.js',
+      future: {
+        v3_fetcherPersist: true,
+        v3_relativeSplatPath: true,
+        v3_throwAbortReason: true,
+      },
     }),
     hydrogen(),
   ],
@@ -19,13 +24,19 @@ export default defineConfig({
     },
   },
   ssr: {
-    noExternal: /^(react|react-dom|react\/jsx-runtime|react\/jsx-dev-runtime|@remix-run|@shopify)/,
+    // Bundle React and related dependencies for Oxygen/Workers
+    noExternal: [
+      /^react/,
+      /^react-dom/,
+      /^@remix-run/,
+      /^@shopify/,
+    ],
     resolve: {
       conditions: ['worker', 'browser'],
       dedupe: ['react', 'react-dom'],
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react/jsx-runtime'],
+      include: ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'],
     },
   },
   server: {

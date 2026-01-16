@@ -63,29 +63,43 @@ export default function OutfitBuilder() {
             <div style={styles.instructions}>
               <h3 style={styles.instructionsTitle}>How to connect your Shopify store:</h3>
               <ol style={styles.instructionsList}>
-                <li>Go to your Shopify Admin panel</li>
-                <li>Navigate to <strong>Settings → Apps and sales channels → Develop apps</strong></li>
-                <li>Click <strong>"Create an app"</strong> or select an existing app</li>
-                <li>Go to <strong>Configuration</strong> tab</li>
-                <li>Under <strong>Storefront API</strong>, configure these scopes:
-                  <ul>
-                    <li><code>unauthenticated_read_product_listings</code></li>
-                    <li><code>unauthenticated_read_product_inventory</code></li>
-                    <li><code>unauthenticated_read_checkouts</code></li>
+                <li><strong>Option 1: Using Hydrogen App (Recommended)</strong>
+                  <ul style={{marginTop: '0.5rem', marginBottom: '0.5rem'}}>
+                    <li>Install the <strong>Hydrogen</strong> app from Shopify App Store</li>
+                    <li>Go to <strong>Settings → Apps and sales channels</strong></li>
+                    <li>Click on the <strong>Hydrogen</strong> app</li>
+                    <li>Create a storefront or select an existing one</li>
+                    <li>Copy the <strong>Storefront API access token</strong> from the app settings</li>
                   </ul>
                 </li>
-                <li>Click <strong>Save</strong></li>
-                <li>Go to <strong>API credentials</strong> tab</li>
-                <li>Click <strong>"Install app"</strong></li>
-                <li>Copy the <strong>Storefront API access token</strong></li>
+                <li><strong>Option 2: Using dev.shopify.com (For custom apps)</strong>
+                  <ul style={{marginTop: '0.5rem', marginBottom: '0.5rem'}}>
+                    <li>Go to <a href="https://dev.shopify.com" target="_blank" rel="noopener noreferrer" style={{color: '#667eea'}}>dev.shopify.com</a> and create a new app</li>
+                    <li>Configure Storefront API scopes:
+                      <ul>
+                        <li><code>unauthenticated_read_product_listings</code></li>
+                        <li><code>unauthenticated_read_product_inventory</code></li>
+                        <li><code>unauthenticated_read_checkouts</code></li>
+                      </ul>
+                    </li>
+                    <li>Install the app to your store and copy the Storefront API token</li>
+                  </ul>
+                </li>
+                <li>Create a <code>.env</code> file in your project root (copy from <code>env.template</code>)</li>
                 <li>Update your <code>.env</code> file with:
                   <pre style={styles.codeBlock}>
 {`PUBLIC_STOREFRONT_API_TOKEN="your-token-here"
-PUBLIC_STORE_DOMAIN="your-store.myshopify.com"`}
+PUBLIC_STORE_DOMAIN="your-store.myshopify.com"
+PUBLIC_STOREFRONT_API_VERSION="2024-01"
+SESSION_SECRET="your-session-secret"`}
                   </pre>
                 </li>
                 <li>Restart the development server: <code>npm run dev</code></li>
               </ol>
+              <div style={{marginTop: '1rem', padding: '1rem', background: '#e0f2fe', borderRadius: '6px', fontSize: '0.9rem'}}>
+                <strong>Note:</strong> Shopify no longer allows creating custom apps directly in the admin panel. 
+                Use the Hydrogen app from the App Store (Option 1) or create apps through dev.shopify.com (Option 2).
+              </div>
             </div>
           </div>
         )}

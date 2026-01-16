@@ -20,30 +20,31 @@ To see real products from your store, you need to add your Storefront API token:
 
 ### Get Your Storefront API Token:
 
-1. **Go to your Shopify Admin:**
-   - Visit: https://u9khbc-vj.myshopify.com/admin
+**Option 1: Using Hydrogen App (Recommended - What you did!)**
 
-2. **Navigate to:**
-   - Settings → Apps and sales channels → **Develop apps**
+1. **Install Hydrogen App:**
+   - Go to your Shopify Admin: https://u9khbc-vj.myshopify.com/admin
+   - Navigate to **Settings → Apps and sales channels**
+   - Install the **Hydrogen** app from the Shopify App Store (if not already installed)
 
-3. **Create a new app** (or use existing):
-   - Click "Create an app"
-   - Name it "Hydrogen Storefront"
-   - Click "Create app"
+2. **Create Storefront & Get Token:**
+   - Click on the **Hydrogen** app
+   - Create a new storefront or select an existing one
+   - Copy the **Storefront API access token** from the app settings
 
-4. **Configure Storefront API Scopes:**
-   - Go to "Configuration" tab
-   - Under "Storefront API", click "Configure"
-   - Enable these scopes:
+**Option 2: Using dev.shopify.com (For custom apps)**
+
+1. **Create App on dev.shopify.com:**
+   - Go to https://dev.shopify.com
+   - Create a new app in your Partner account
+   - Configure Storefront API scopes:
      - ✅ `unauthenticated_read_product_listings`
      - ✅ `unauthenticated_read_product_inventory`
      - ✅ `unauthenticated_read_checkouts`
-   - Click "Save"
 
-5. **Install & Get Token:**
-   - Go to "API credentials" tab
-   - Click "Install app"
-   - Copy the **Storefront API access token**
+2. **Install & Get Token:**
+   - Install the app to your store
+   - Copy the **Storefront API access token** from the app credentials
 
 6. **Update Your `.env` File:**
    
